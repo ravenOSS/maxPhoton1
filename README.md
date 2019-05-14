@@ -1,35 +1,23 @@
 # maxPhoton1
 
-A Particle project named maxPhoton1
+A Particle project named maxPhoton0 to develop an accurate method to read the serial output of the Maxbotix ultrasonic sensors.
 
-## Welcome to your project!
+Testing with a XL-Maxsonar 7092 with AN, PW, and Serial(RS232) output.
 
-Every new Particle project is composed of 3 important elements that you'll see have been created in your project directory for maxPhoton1.
+From the Maxbotix datasheet:
 
-#### ```/src``` folder:  
-This is the source folder that contains the firmware files for your project. It should *not* be renamed. 
-Anything that is in this folder when you compile your project will be sent to our compile service and compiled into a firmware binary for the Particle device that you have targeted.
+Pin 4- RX- This pin is internally pulled high. If Pin-4 is left unconnected or held high, the sensor will continually measure the range. If Pin-4 is held low the sensor will stop ranging. Bring high 20uS or more to command a range reading.
+Pin 5- TX- When Pin 1 is open or held high, the Pin 5 output delivers asynchronous serial data in an RS232 format, except the voltages are 0-Vcc. The output is an ASCII capital “R”, followed by ASCII character digits representing the range in centimeters up to a maximum of 765 (select models) or 1068 (select models), followed by a carriage return (ASCII 13). The baud rate is 9600, 8 bits, no parity, with one stop bit. Although the voltages of 0V to Vcc are outside the RS232 standard, most RS232 devices have sufficient margin to read the 0V to Vcc serial data. If standard voltage level RS232 is desired, invert, and connect an RS232 converter such as a MAX232.
 
-If your application contains multiple files, they should all be included in the `src` folder. If your firmware depends on Particle libraries, those dependencies are specified in the `project.properties` file referenced below.
+Many projects only require periodic switching of state such as turning an LED on & off. This is not the objective of the development. Other applications simply required a continuous reading from the sensor.
 
-#### ```.ino``` file:
-This file is the firmware that will run as the primary application on your Particle device. It contains a `setup()` and `loop()` function, and can be written in Wiring or C/C++. For more information about using the Particle firmware API to create firmware for your Particle device, refer to the [Firmware Reference](https://docs.particle.io/reference/firmware/) section of the Particle documentation.
+This project is designed to get a distance reading from the sensor using the serial output. As can be seen from the datasheet extract, a reading may be triggered by bringing a pulled-down pin 4 to a HIGH state for 20 microseconds. 
 
-#### ```project.properties``` file:  
-This is the file that specifies the name and version number of the libraries that your project depends on. Dependencies are added automatically to your `project.properties` file when you add a library to a project using the `particle library add` command in the CLI or add a library in the Desktop IDE.
+A Particle Photon Arduino compatible microcontroller is used with a MAX3232 breakout from Sparkfun for correct TTL signals. 
 
-## Adding additional files to your project
-
-#### Projects with multiple sources
-If you would like add additional files to your application, they should be added to the `/src` folder. All files in the `/src` folder will be sent to the Particle Cloud to produce a compiled binary.
-
-#### Projects with external libraries
-If your project includes a library that has not been registered in the Particle libraries system, you should create a new folder named `/lib/<libraryname>/src` under `/<project dir>` and add the `.h`, `.cpp` & `library.properties` files for your library there. Read the [Firmware Libraries guide](https://docs.particle.io/guide/tools-and-features/libraries/) for more details on how to develop libraries. Note that all contents of the `/lib` folder and subfolders will also be sent to the Cloud for compilation.
-
-## Compiling your project
-
-When you're ready to compile your project, make sure you have the correct Particle device target selected and run `particle compile <platform>` in the CLI or click the Compile button in the Desktop IDE. The following files in your project folder will be sent to the compile service:
-
-- Everything in the `/src` folder, including your `.ino` application file
-- The `project.properties` file for your project
-- Any libraries stored under `lib/<libraryname>/src`
+Development steps:
+1. Get a continuous reading of the sensor output displayed to the serial console.
+2. Get a periodic reading.
+3. Using built-in CTC interrupt timer, get one-shot range reading.
+4. Add to 3, ability to get muliple readings for a mean data calculation.
+5. Add to Step 4, managing periodic readings collecting mean data. 

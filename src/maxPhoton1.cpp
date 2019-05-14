@@ -7,15 +7,20 @@
  * Date: 5.13.19
  */
 
+void setup();
 void loop();
 int MAXread();
 #line 8 "/Users/raventt/MBP_Projects/arduino/maxPhoton1/src/maxPhoton1.ino"
-void loop()
+void setup()
 {
   Serial.begin(9600);
   Serial.println("Hello ravenTT!");
   Serial1.begin(9600);
   Serial.println("Sonar connected");
+}
+
+void loop()
+{
   int range = MAXread();
   Serial.print("Range: ");
   Serial.println(range);

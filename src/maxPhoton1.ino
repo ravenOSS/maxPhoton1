@@ -5,12 +5,16 @@
  * Date: 5.13.19
  */
 
-void loop()
+void setup()
 {
   Serial.begin(9600);
   Serial.println("Hello ravenTT!");
   Serial1.begin(9600);
   Serial.println("Sonar connected");
+}
+
+void loop()
+{
   int range = MAXread();
   Serial.print("Range: ");
   Serial.println(range);

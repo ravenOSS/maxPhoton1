@@ -7,64 +7,124 @@
  * Date: 5.13.19
  */
 
+// global vars (why?)
 void setup();
-#line 8 "/Users/raventt/MBP_Projects/arduino/maxPhoton1/src/maxPhoton1.ino"
+void loop();
+#line 9 "/Users/raventt/MBP_Projects/arduino/maxPhoton1/src/maxPhoton1.ino"
+int maxOn = D7; // Photon output pin to toggle pin 4 on Maxbotix
+// char range[3];
+// char _inputChar;
+// int distance;
+// int i = 0;
+
 void setup()
 {
   Serial.begin(9600);
   Serial.println("Hello ravenTT!");
   Serial1.begin(9600);
   Serial.println("Sonar connected");
+  pinMode(maxOn, OUTPUT);
+  // digitalWrite(maxOn, LOW); // Stop continuous reading mode on sensor
 }
 
+void loop() {
+  // digitalWrite(maxOn, HIGH); // Stop continuous reading mode on sensor
+  // delay(1200);
+  //   digitalWrite(maxOn, LOW); // Stop continuous reading mode on sensor
+}
 // void loop()
 // {
-//   int range = readMax();
-//   Serial.print("Range: ");
-//   Serial.println(range);
-//   delay(1200); //set interval for sensor reading
+//   int distance = getdistance();
+//   Serial.println(distance);
+//   delay(1500);
 // }
 
-// int readMax()
+// // Trigger sensor read
+// void triggerOne()
 // {
-//   uint8_t length = 4;
-//   char inBuf[length];
-//   char inByte;
+//   digitalWrite(maxOn, HIGH);
+//   delay(200);
+//   digitalWrite(maxOn, LOW);
+// }
 
-//   // flush and wait for a range reading
+// Get the 4 characters; if a carriage return is encountered, start fresh
+// from the beginning.
+// Time differences are unsigned; rollovers are a non-issue when differencing
+
+// int getdistance() {
 //   Serial1.flush();
- 
-//   while (Serial1.available() > 0  && Serial1.read() != 'R') {
-//     inByte = Serial1.read();
-//     if (inByte == 'R') {
-//       for (int i = 0; i < 3; i++) {
-//         inBuf[i] = Serial1.read();
+//   triggerOne();
+
+//   while ((Serial1.available() > 0)) {
+//     _inputChar = Serial1.read();
+//     Serial.println(_inputChar); //DEBUG!
+//       if (_inputChar == 'R') {
+//             // Test if ASCII number
+//             if ((_inputChar >= 48) && (_inputChar <= 57)) {
+//               Serial.print(" Valid"); //DEBUG!
+//           //     range[i] = _inputChar;
+//           //     i += 1;
+//           //   }
+//           //   else if (_inputChar == 13) {
+//           //     // Serial.print(" Reset"); //DEBUG!
+//           //     i = 0; // reset to the start of a measurement
+//           //   }
+//           // }
+//           // // Break if enough characters are recorded
+//           // // Serial.print("i = "); Serial.println(i); //DEBUG!
+//           // if (i == 4)
+//           // {
+//           //   Serial.println(range);
+//           //   distance = atoi(range);
+//           //   return distance;
+//           // }
+//               }
 //       }
-//     }
-//     return atoi(inBuf);
 //   }
-//   return 0;
 // }
+  // Serial.println("END!"); //DEBUG!
+  // Serial1.end(); //DEBUG!
 
-// int readMax()   // following code is simply illogical && does not work
-//                 // code extracted from another library
-//                 // may not work because maxbotix.h (from original library) is deliberately not included
-// {
-//   uint8_t length = 4;
-//   char buffer[5];
+  // const int length = 5;
+  // char inBuf[length];
+  // char inChar;
 
-//   // flush and wait for a range reading
-//   Serial1.flush();
+  // int maxOn = D0; // Photon output pin to toggle pin 4 on Maxbotix
 
-//   while (Serial1.available() > 0 || Serial1.read() != 'R');
+  // char buf[5]; // Create buffer to handle RxxxCR
 
-//   // read the range
-//   for (int i = 0; i < length; i++)
-//   {
-//     while (!Serial1.available());
-  
-//     buffer[i] = Serial1.read();
-//   }
+  // void setup()
+  // {
+  //   pinMode(maxOn, OUTPUT);
+  //   Serial.begin(9600);
+  //   Serial.println("Hello ravenTT!");
+  //   Serial1.begin(9600);
+  //   Serial.println("Sonar connected");
+  //   digitalWrite(maxOn, LOW); // Stop continuous reading mode on sensor
+  // }
 
-//   return atoi(buffer);
-// }
+  // void loop()
+  // {
+  //   int range = readMax();
+  //   Serial.print("Range: ");
+  //   Serial.println(range);
+  //   delay(1200); //set interval for sensor reading
+  // }
+
+  // int readMax()
+  // {
+  //   while (Serial1.available() > 0 && Serial1.read() != 'R') {
+  //     inChar = Serial1.read();
+  //     {
+  //     if (inChar == 'R')
+
+  //       // Serial.println("We got an R");
+  //       for (int i = 0; i < 5; i++)
+  //       {
+  //       inBuf[i] = Serial1.read();
+  //       Serial.println(inBuf[i]);
+  //       }
+  //     }
+  //   }
+  //   return atoi(inBuf);
+  // }
